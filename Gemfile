@@ -7,6 +7,8 @@ gem 'rails', '3.0.5'
 
 gem 'sqlite3'
 
+gem 'spectator-validates_email', :require => 'validates_email'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
