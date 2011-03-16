@@ -40,4 +40,15 @@ describe ShippingAddress do
 
   end
 
+  context "scopes" do
+    before do
+      @us = Factory(:shipping_address)
+      @mx = Factory(:shipping_address, :country => "MX")
+    end
+
+    it 'finds all US addresses' do
+      ShippingAddress.us.all.should == [@us]
+    end
+  end
+
 end

@@ -7,6 +7,8 @@ class ShippingAddress < ActiveRecord::Base
 
   before_validation :set_country_default
 
+  scope :us, where(:country => "US")
+
   private
 
   def set_country_default

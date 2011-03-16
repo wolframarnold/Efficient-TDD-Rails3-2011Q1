@@ -29,5 +29,9 @@ gem 'spectator-validates_email', :require => 'validates_email'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-   gem 'rspec-rails'
+   gem 'rspec-rails'  
+end
+
+group :test do
+  gem 'factory_girl_rails'  
 end
