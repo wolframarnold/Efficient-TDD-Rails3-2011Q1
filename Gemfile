@@ -9,6 +9,8 @@ gem 'sqlite3'
 
 gem 'spectator-validates_email', :require => 'validates_email'
 
+gem 'simple_form'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
