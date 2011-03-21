@@ -10,3 +10,7 @@ Factory.define :shipping_address do |f|
   f.zip "1234"
   f.state "CA"
 end
+
+Factory.define :order do |f|
+  f.association :shipping_address
+end
