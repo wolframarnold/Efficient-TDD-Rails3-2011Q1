@@ -57,6 +57,35 @@ describe User do
         subject.shipping_addresses.create(:street => "123 Main St", :city => "San Francisco", :state => "CA", :zip => "94321")
       }.to change(ShippingAddress,:count).by(1)
     end
+
+    context "nested attributes" do
+      subject { Factory(:user) }
+
+      it 'can be updated via nested attributes' do
+        lambda {
+          subject.attributes = {:shipping_addresses_attributes => [Factory.attributes_for(:shipping_address)]}
+          subject.save!
+          puts subject.errors
+        }.should change {subject.shipping_addresses.count}.by(1)
+      end
+
+      it "won't add a shipping address if all fields are blank" do
+        lambda {
+          subject.attributes = {:shipping_addresses_attributes => [:street => '', :city => '', :state => '', :zip =>'']}
+          subject.save!
+        }.should_not change {subject.shipping_addresses.count}
+      end
+
+      it 'can delete an address via nested attributes and _destroy flag' do
+        addr = subject.shipping_addresses.create(Factory.attributes_for(:shipping_address))
+        lambda {
+          subject.attributes = {:shipping_addresses_attributes => [{:id => addr.id, :_destroy => 1}]}
+          subject.save!
+        }.should change{subject.shipping_addresses.count}.by(-1)  # addresses(true) causes a reload
+      end
+
+    end
+
   end
 
 end
