@@ -45,7 +45,7 @@ describe User do
     end
   end
 
-  context "associations --" do
+  context "shipping address" do
     it 'has many shipping addresses' do
       subject.should respond_to(:shipping_addresses)
     end

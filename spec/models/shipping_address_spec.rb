@@ -42,12 +42,49 @@ describe ShippingAddress do
 
   context "scopes" do
     before do
-      @us = Factory(:shipping_address)
+      @us_ca = Factory(:shipping_address, :state => 'CA')
+      @us_nv = Factory(:shipping_address, :state => 'NV')
       @mx = Factory(:shipping_address, :country => "MX")
     end
 
     it 'finds all US addresses' do
-      ShippingAddress.us.all.should == [@us]
+      ShippingAddress.us.all.should == [@us_ca, @us_nv]
+    end
+
+    it 'finds all addresses in a given state' do
+      ShippingAddress.in_state('NV').all.should == [@us_nv]
+    end
+
+  end
+
+  context "orders" do
+    before do
+      @user  = Factory(:user)
+      @addr1 = Factory(:shipping_address, :user => @user)
+      @addr2 = Factory(:shipping_address, :city => 'LA', :zip => '34567', :user => @user)
+      @addr3 = Factory(:shipping_address, :city => 'NY', :zip => '56789', :user => @user)
+    end
+
+    it 'shows all shipping addresses previously used, in order of most use by order' do
+      @order1 = Factory(:order, :shipping_address => @addr1, :created_at => 5.months.ago)
+      @order2 = Factory(:order, :shipping_address => @addr2, :created_at => 10.months.ago)
+      @order3 = Factory(:order, :shipping_address => @addr3, :created_at => Time.now)
+
+      @user.shipping_addresses.on_file.all.should == [@addr3, @addr1, @addr2]
+    end
+
+    it 'does not show shipping addresses of orders older than 1 year' do
+      @order1 = Factory(:order, :shipping_address => @addr1)
+      @order2 = Factory(:order, :shipping_address => @addr2, :created_at => 13.months.ago)
+
+      @user.shipping_addresses.on_file.all.should == [@addr1]
+    end
+
+    it 'does not show duplicate addresses' do
+      @order1 = Factory(:order, :shipping_address => @addr1)
+      @order2 = Factory(:order, :shipping_address => @addr1)
+
+      @user.shipping_addresses.on_file.all.should == [@addr1]
     end
   end
 
