@@ -11,6 +11,8 @@ gem 'spectator-validates_email', :require => 'validates_email'
 
 gem 'simple_form'
 
+gem 'simple-rss'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -39,4 +41,5 @@ end
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'launchy' # for opening error pages from webrat & capybara in a browser
 end

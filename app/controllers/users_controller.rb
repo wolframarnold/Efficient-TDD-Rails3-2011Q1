@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def product
+
+  end
+
   def show
     @user = User.find(params[:id])
   end

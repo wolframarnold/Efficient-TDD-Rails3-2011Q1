@@ -1,0 +1,12 @@
+<h1>Products</h1>
+<%   require 'open-uri' %>
+<% feed = SimpleRSS.parse(open("http://www.amazon.com/rss/tag/running/popular?length=1"))  %>
+<ul>
+    <% feed.items.each do |item| %>
+     <li>
+       <h2><%= item.title %></h2>
+       <p><%= link_to "Click here to buy", item.link %></p>
+     </li>
+
+     <% end %>
+</ul>
