@@ -20,6 +20,11 @@ describe User do
     end
   end
 
+  it 'does not report :admin in json respresentation' do
+    u = Factory(:user)
+    u.as_json['user'].should_not include('admin')
+  end
+
   context "full_name" do
 
     it 'is a callable method' do

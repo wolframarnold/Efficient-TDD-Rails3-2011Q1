@@ -29,6 +29,15 @@ Webrat.configure do |config|
 end
 
 
+# Need this to be able to stub Time.now
+require 'rspec/mocks'
+Cucumber::Rails::World.class_eval do
+  include RSpec::Mocks
+  RSpec::Mocks.setup(self)
+end
+
+
+
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how 
 # your application behaves in the production environment, where an error page will 

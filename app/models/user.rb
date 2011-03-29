@@ -16,5 +16,11 @@ class User < ActiveRecord::Base
     name << last_name
     name
   end
-  
+
+  def as_json(opts={})
+    base = super
+    base['user'].delete('admin')
+    base
+  end
+
 end
