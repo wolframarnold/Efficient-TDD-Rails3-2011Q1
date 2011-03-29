@@ -3,7 +3,7 @@ Given /^that it is (.*)$/ do |time_string|
 end
 
 When /^I make a (\w+) request to (.+)$/ do |verb, url|
-  request_page(url, verb.downcase.to_sym, nil)
+  visit url, verb.downcase.to_sym
 end
 
 Then /^I should get a (\d+) response code$/ do |status_code|

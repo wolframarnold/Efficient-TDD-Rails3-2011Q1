@@ -15,10 +15,9 @@ Feature: Users API
     And the response body should contain the JSON hash:
     """
       [{user:{created_at:"2010-01-01T08:00:00Z",updated_at:"2010-01-01T08:00:00Z",
-              id:1,
               last_name:"Smith", email:null, first_name: "Joe",
               middle_name:null}},
        {user:{created_at:"2010-01-01T08:00:00Z",updated_at:"2010-01-01T08:00:00Z",
-              id:2, last_name: "Porter", email:null,
+              last_name: "Porter", email:null,
               first_name:"Sally",middle_name:null}}]
     """

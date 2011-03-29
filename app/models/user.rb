@@ -18,9 +18,9 @@ class User < ActiveRecord::Base
   end
 
   def as_json(opts={})
-    base = super
-    base['user'].delete('admin')
-    base
+    users_hash  = super
+    users_hash['user'].except!(*%w(id admin))
+    users_hash
   end
 
 end

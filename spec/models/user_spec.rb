@@ -22,6 +22,7 @@ describe User do
 
   it 'does not report :admin in json respresentation' do
     u = Factory(:user)
+    u.as_json['user'].should_not include('id')
     u.as_json['user'].should_not include('admin')
   end
 
