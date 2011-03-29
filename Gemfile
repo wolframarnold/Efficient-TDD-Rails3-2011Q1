@@ -33,9 +33,10 @@ gem 'simple_form'
 group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'webrat', '>=0.7.2.beta.6', :git => 'git://github.com/orangewise/webrat'
 end
 
 group :test do
-  gem 'factory_girl_rails'  
-  gem 'webrat'
+  gem 'factory_girl_rails'
 end

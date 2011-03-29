@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/orangewise/webrat
+  revision: 1f6e1e1b3da79af627b80ba8662c55b2b687f4c5
+  specs:
+    webrat (0.7.2)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -40,6 +49,7 @@ GEM
       cucumber (>= 0.10.1)
       nokogiri (>= 1.4.4)
       rack-test (>= 0.5.7)
+    database_cleaner (0.6.6)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -101,20 +111,17 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
-    webrat (0.7.3)
-      nokogiri (>= 1.2.0)
-      rack (>= 1.0)
-      rack-test (>= 0.5.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   cucumber-rails
+  database_cleaner
   factory_girl_rails
   rails (= 3.0.5)
   rspec-rails
   simple_form
   spectator-validates_email
   sqlite3
-  webrat
+  webrat (>= 0.7.2.beta.6)!
