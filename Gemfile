@@ -42,4 +42,5 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'launchy' # for opening error pages from webrat & capybara in a browser
+  gem 'fakeweb'
 end

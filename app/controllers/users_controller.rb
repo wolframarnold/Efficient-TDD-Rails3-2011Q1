@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def product
-
+    @products = Product.fetch_all
   end
 
   def show
