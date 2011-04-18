@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 describe User do
@@ -5,7 +6,7 @@ describe User do
   context "is not valid" do
     #  subject { User.new }  -- not strictly necessary so long we have describe User up top
 
-    [:first_name, :last_name].each do |attr|
+    [:first_name, :last_name, :email].each do |attr|
       it "without #{attr}" do
         subject.should_not be_valid  # when followed by should or should_not, subject. is optional
         subject.errors[attr].should_not be_empty
@@ -17,6 +18,19 @@ describe User do
       subject.should_not be_valid
       subject.errors[:email].should_not be_empty
       subject.errors[:email].should == ['is not a valid email address']
+    end
+
+    it 'without unique email' do
+      u = Factory(:user)
+      subject.email = u.email
+      subject.should_not be_valid
+      subject.errors['email'].should == ['has already been taken']
+    end
+
+    it 'without uid if provider == "twitter"' do
+      subject.provider = 'twitter'
+      subject.should_not be_valid
+      subject.errors[:uid].should_not be_empty
     end
   end
 
@@ -57,7 +71,7 @@ describe User do
     end
 
     it 'can create a shipping address' do
-      subject.attributes = {:first_name => "Joe", :last_name => "Smith"}
+      subject.attributes = Factory.attributes_for(:user)
       subject.save!
       expect {
         subject.shipping_addresses.create(:street => "123 Main St", :city => "San Francisco", :state => "CA", :zip => "94321")
@@ -94,4 +108,24 @@ describe User do
 
   end
 
+  context ".by_twitter" do
+    before do
+      Factory(:user)
+      @user = Factory(:twitter_user)
+    end
+    it 'finds an existing record based on UID' do
+      found_user = User.with_twitter_uid(@user.uid).first
+      found_user.should == @user
+    end
+  end
+
+  context "#new_with_session" do
+    it 'builds user record with session data when provided' do
+      u = User.new_with_session({},{'devise.twitter_uid' => '12345', 'devise.twitter_user_info' => OmniAuth.config.mock_auth[:twitter]['user_info']})
+      u.uid.should == '12345'
+      u.username.should == 'joesmith'
+      u.avatar.should_not be_nil
+      u.avatar.should == OmniAuth.config.mock_auth[:twitter]['user_info']['image']
+    end
+  end
 end

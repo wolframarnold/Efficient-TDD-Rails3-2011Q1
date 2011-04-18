@@ -1,0 +1,18 @@
+<h2>Sign In New User</h2>
+
+<p>To create your account, we need additional information that Twitter doesn't provide.</p>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <p><%= f.label :email %><br />
+  <%= f.email_field :email %></p>
+
+  <p><%= f.label :first_name %><br />
+  <%= f.text_field :first_name %></p>
+
+  <p><%= f.label :last_name %><br />
+  <%= f.text_field :last_name %></p>
+
+  <p><%= f.submit "Create account" %></p>
+<% end %>

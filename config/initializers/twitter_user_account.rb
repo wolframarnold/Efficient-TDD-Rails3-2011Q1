@@ -1,0 +1,2 @@
+TWITTER_USERNAME = 'wolframarnold'
+TWITTER_PASSWORD = 'Rails3TDDClass'

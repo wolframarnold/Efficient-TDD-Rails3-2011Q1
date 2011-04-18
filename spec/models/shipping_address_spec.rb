@@ -22,7 +22,7 @@ describe ShippingAddress do
 
   context "optional country" do
     subject do
-      u = User.create(:first_name => 'Joe', :last_name => 'Smith')
+      u = Factory(:user)
       u.shipping_addresses.build(:street => "123 Main St", :city => "San Francisco", :state => "CA", :zip => "94321")
     end
 

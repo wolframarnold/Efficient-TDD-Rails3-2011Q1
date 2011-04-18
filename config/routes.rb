@@ -1,4 +1,5 @@
 App::Application.routes.draw do
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -58,5 +59,11 @@ App::Application.routes.draw do
 
   match '/product' => 'users#product'
 
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" } do
+    get 'sign_in', :to => 'application#index', :as => :new_user_session
+    get 'sign_out', :to => 'sessions#destroy', :as => :destroy_user_session
+  end
   resources :users
+  
+  root :to => 'application#index'
 end

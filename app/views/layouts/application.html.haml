@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %title Efficient Rails 3 TDD Demo App
+    = stylesheet_link_tag :all
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
+  %body
+
+  %p.notice= notice
+  %p.alert= alert
+
+  .login
+    - if user_signed_in?
+      Signed in as:
+      -#= session[:name]
+      (
+      = image_tag 't_mini-a.png'
+      @
+      = current_user.username
+      )
+      = image_tag current_user.avatar
+      = link_to "Sign out", destroy_user_session_path
+    - else
+      = link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter)
+
+  = yield

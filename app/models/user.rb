@@ -1,13 +1,17 @@
 class User < ActiveRecord::Base
 
-  validates :first_name, :last_name, :presence => true
-  validates :email, :email => {:message => "is not a valid email address"}, :allow_blank => true
+  devise :omniauthable, :registerable
 
-  attr_accessible :first_name, :middle_name, :last_name, :email, :shipping_addresses_attributes
+  validates :first_name, :last_name, :presence => true
+  validates :email, :email => {:message => "is not a valid email address"}, :presence => true, :uniqueness => true
+  validates :uid, :presence => true, :if => Proc.new {|u| u.provider.present? }
+  attr_accessible :first_name, :middle_name, :last_name, :email, :shipping_addresses_attributes, :provider, :uid, :username, :avatar
 
   has_many :shipping_addresses, :dependent => :destroy
 
   accepts_nested_attributes_for :shipping_addresses, :reject_if => :all_blank, :allow_destroy => true
+
+  scope :with_twitter_uid, lambda {|uid| where(:uid => uid)}
 
   def full_name
     name = first_name
@@ -21,6 +25,18 @@ class User < ActiveRecord::Base
     users_hash  = super
     users_hash['user'].except!(*%w(id admin))
     users_hash
+  end
+
+  def self.new_with_session(params,session)
+    super.tap do |user|
+      uid = session['devise.twitter_uid']
+      user_info = session['devise.twitter_user_info']
+      if uid.present? && user_info.present?
+        user.uid = uid
+        user.username = user_info['nickname']
+        user.avatar = user_info['image']
+      end
+    end
   end
 
 end

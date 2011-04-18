@@ -1,6 +1,17 @@
 require "spec_helper"
 
 describe UsersController do
+  describe "Devise Registration routes" do
+    it '/sign_up' do
+      {:get => '/users/sign_up'}.should route_to(:controller => 'devise/registrations', :action => 'new')
+    end
+
+    it "/users is routes to Devise::RegistrationsController" do
+      { :post => "/users" }.should route_to(:controller => "devise/registrations", :action => "create")
+    end
+
+  end
+
   describe "routing" do
 
     it "recognizes and generates #index" do
@@ -17,10 +28,6 @@ describe UsersController do
 
     it "recognizes and generates #edit" do
       { :get => "/users/1/edit" }.should route_to(:controller => "users", :action => "edit", :id => "1")
-    end
-
-    it "recognizes and generates #create" do
-      { :post => "/users" }.should route_to(:controller => "users", :action => "create")
     end
 
     it "recognizes and generates #update" do

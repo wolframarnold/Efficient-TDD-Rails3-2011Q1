@@ -5,13 +5,19 @@ gem 'rails', '3.0.5'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.3.3'
+gem 'omniauth', '~> 0.2.1'
+gem 'haml', '~> 3.0.25'
 
 gem 'spectator-validates_email', :require => 'validates_email'
 
 gem 'simple_form'
 
 gem 'simple-rss'
+
+gem 'devise', '~> 1.2.1'
+
+gem 'mongrel'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -33,7 +39,8 @@ gem 'simple-rss'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.5.0'
+  gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'webrat', '>=0.7.2.beta.6', :git => 'git://github.com/orangewise/webrat'
